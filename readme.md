@@ -29,4 +29,4 @@
 
 ## Questions
 ##### For more of my work, checkout my github! https://github.com/AnnaManrodt 
-##### Any addtional questions? you can reach me at anna.manrodts@gmail.com. To view a preview of this click here
+##### Any addtional questions? you can reach me at anna.manrodts@gmail.com. To view a preview of this click here https://drive.google.com/file/d/1zPUnzRqusYYyBEoQYlHh81B97FQay3Nb/view
