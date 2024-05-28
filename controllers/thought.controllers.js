@@ -1,33 +1,39 @@
-const { Thought } = require('../models/Thought')
+const { Thought, User } = require('../models/index.js');
 
 module.exports = {
 
     async getThought(req, res) {
         try {
-            const thought = await Thought.find().populate('friend')
+            const thought = await Thought.find().populate('friend');
+            res.json(thought);
         }
         catch (err) {
-            res.status(500).json(err);
+            res.status(500).send(err.stack);
         }
     },
 
 
     async getOneThought(req, res) {
         try {
-            const thought = await Thought.findOne({ _id: [req.params.courseId] }).populate('friend')
+            const thought = await Thought.findOne({ _id: [req.params.id] }).populate('friend')
+            res.json(thought);
         }
         catch (err) {
-            res.status(500).json(err);
+            res.status(500).send(err.stack);
         }
     },
 
-    async createThought(req, res){
+    async createThought(req, res) {
         try {
-            const thought = await Thought.create()
+            const thought = await Thought.create(req.body);
+            const user = await User.findOne({ _id: [req.params.id] }).populate('friends').populate('thoughts');
+            user.thoughts.push(thought);
+            user.save();
+            res.send(user);
         }
-        catch (err){
+        catch (err) {
             console.log(err);
-            return res.status(500).json(err);
+            res.status(500).send(err.stack);
         }
     },
 
@@ -37,18 +43,20 @@ module.exports = {
                 { _id: req.params.userId },
                 { $set: req.body }
             )
+            res.json(thought);
         }
         catch (err) {
-            res.status(500).json(err);
+            res.status(500).send(err.stack);
         }
     },
 
     async deleteThought(req, res) {
         try {
-            const thought = await Thought.findOneAndDelete({ _id: req.params.userId });
+            const thought = await Thought.findOneAndDelete({ _id: req.params.id });
+            res.status(200).json("OK");
         }
         catch (err) {
-            res.status(500).json(err);
+            res.status(500).send(err.stack);
         }
     }
 }
