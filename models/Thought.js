@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 
 const thoughtSchema = new Schema(
     {
@@ -10,16 +10,17 @@ const thoughtSchema = new Schema(
         },
         email: {
             type: String,
-            required: true,
-            unique: true,
-
-            //add a validation on here 
-        }
+            required: true
+        },
+        userId: {
+            type: Types.ObjectId,
+            ref: 'user'
+        },
         // friends: {
         //     thoughts: [{type: Schema.Types.ObjectId, ref: 'friend'}]
         // }
     }
 )
 
-const Thought = model('thought', thoughtSchema);
+const Thought = model('Thought', thoughtSchema);
 module.exports = Thought;
